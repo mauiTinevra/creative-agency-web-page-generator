@@ -169,6 +169,24 @@ h2 {
   color: var(--muted);
 }
 
+h3 {
+  margin: 0 0 10px;
+  font-family: var(--text);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.built {
+  margin: 0 0 28px;
+  padding: 0;
+  list-style: none;
+}
+
+.built li {
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+
 .button {
   display: inline-block;
   padding: 12px 20px;

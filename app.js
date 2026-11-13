@@ -47,6 +47,11 @@ for (const site of window.SITES) {
   info.append(el("h2", "", site.name));
   info.append(el("p", "description", site.description));
 
+  info.append(el("h3", "", "What we built"));
+  const built = el("ul", "built");
+  for (const item of site.built) built.append(el("li", "", item));
+  info.append(built);
+
   const visit = el("a", "button", "Visit " + host);
   visit.href = site.url;
   visit.target = "_blank";
