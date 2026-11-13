@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Our Work</title>
+<meta name="description" content="A selection of the websites we've designed and built for our clients.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="hero">
+  <p class="eyebrow">Portfolio</p>
+  <h1>Our work</h1>
+  <p class="lede">A selection of the websites we've designed and built for our clients. Click any one to visit the live site.</p>
+</header>
+
+<main id="sites" class="grid"></main>
+
+<footer class="foot">
+  <p>Want a site like these? Let's talk.</p>
+</footer>
+
+<script src="sites.js"></script>
+<script>
+  const grid = document.getElementById("sites");
+  const PREVIEW_WIDTH = 1280;
+
+  for (const site of window.SITES) {
+    const host = new URL(site.url).host;
+    const card = document.createElement("a");
+    card.className = "card";
+    card.href = site.url;
+    card.target = "_blank";
+    card.rel = "noopener";
+
+    const preview = document.createElement("div");
+    preview.className = "preview";
+    const bar = document.createElement("div");
+    bar.className = "bar";
+    bar.innerHTML = "<i></i><i></i><i></i>";
+    const address = document.createElement("span");
+    address.textContent = host;
+    bar.append(address);
+    const screen = document.createElement("div");
+    screen.className = "screen";
+    const frame = document.createElement("iframe");
+    frame.src = site.url;
+    frame.loading = "lazy";
+    frame.title = site.name + " preview";
+    frame.tabIndex = -1;
+    frame.setAttribute("aria-hidden", "true");
+    frame.setAttribute("scrolling", "no");
+    screen.append(frame);
+    preview.append(bar, screen);
+
+    const body = document.createElement("div");
+    body.className = "body";
+    const category = document.createElement("p");
+    category.className = "category";
+    category.textContent = site.category;
+    const name = document.createElement("h2");
+    name.textContent = site.name;
+    const description = document.createElement("p");
+    description.className = "description";
+    description.textContent = site.description;
+    const visit = document.createElement("span");
+    visit.className = "visit";
+    visit.textContent = "Visit site →";
+    body.append(category, name, description, visit);
+
+    card.append(preview, body);
+    grid.append(card);
+  }
+
+  // Scale each full-size preview down to fit its card.
+  const fit = () => {
+    for (const screen of document.querySelectorAll(".screen")) {
+      screen.style.setProperty("--scale", screen.clientWidth / PREVIEW_WIDTH);
+    }
+  };
+  new ResizeObserver(fit).observe(grid);
+  fit();
+</script>
+</body>
+</html>
