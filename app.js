@@ -39,8 +39,29 @@ for (const site of window.SITES) {
   const host = new URL(site.url).host;
   const project = el("article", "project");
 
+  // Wide screens show both previews together. Small screens show one at a
+  // time, starting with the phone view, and these buttons switch between them.
   const stage = el("div", "stage");
+  stage.dataset.view = "phone";
+  const views = el("div", "views");
+  views.setAttribute("role", "group");
+  views.setAttribute("aria-label", "Preview size for " + site.name);
+  for (const kind of ["phone", "desktop"]) {
+    const label = kind === "phone" ? "On a phone" : "On a computer";
+    const button = el("button", "", label);
+    button.type = "button";
+    button.setAttribute("aria-pressed", String(kind === "phone"));
+    button.addEventListener("click", () => {
+      stage.dataset.view = kind;
+      for (const other of views.children) {
+        other.setAttribute("aria-pressed", String(other === button));
+      }
+    });
+    views.append(button);
+  }
+  stage.append(views);
   stage.append(preview(site, "desktop", 1280, 800));
+  stage.append(preview(site, "phone", 390, 780));
 
   const info = el("div", "info");
   info.append(el("p", "category", site.category));

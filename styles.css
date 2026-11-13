@@ -149,6 +149,21 @@ h1 {
   pointer-events: none;
 }
 
+/* The phone preview overlaps the corner of the desktop one. */
+
+.stage { margin-bottom: 32px; }
+
+.frame-phone {
+  position: absolute;
+  right: -14px;
+  bottom: -32px;
+  width: 21%;
+  border-radius: 18px;
+  box-shadow: -6px 6px 0 var(--bloom);
+}
+
+.views { display: none; }
+
 .category {
   margin: 0 0 8px;
   font-weight: 600;
@@ -266,4 +281,42 @@ h3 {
   }
 
   .contact { padding: 64px 24px; }
+
+  /* One preview at a time, chosen with the buttons above it. */
+
+  .stage { margin-bottom: 0; }
+
+  .views {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .views button {
+    flex: 1;
+    padding: 10px 12px;
+    background: transparent;
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .views button[aria-pressed="true"] {
+    background: var(--ink);
+    color: var(--white);
+  }
+
+  .frame-phone {
+    position: static;
+    width: min(280px, 74%);
+    margin: 0 auto;
+    border-radius: 24px;
+    box-shadow: 8px 8px 0 var(--bloom);
+  }
+
+  .stage[data-view="phone"] .frame-desktop,
+  .stage[data-view="desktop"] .frame-phone { display: none; }
 }
